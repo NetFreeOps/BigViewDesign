@@ -2,9 +2,9 @@
   <div class="login-container">
     <el-card class="login-card">
       <h3 class="login-title">天弘实验室大屏展示系统</h3>
-      <el-form :model="form" :rules="rules" ref="loginForm" label-position="top">
+      <el-form ref="loginForm" label-position="top">
         <el-form-item prop="username" label="用户名">
-          <el-input 	  v-model="form.username" placeholder="请输入用户名"></el-input>
+          <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password" label="密码">
           <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
@@ -21,7 +21,7 @@
   
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import {  useRouter } from 'vue-router';
 
 const form = ref({
   username: '',
@@ -32,16 +32,14 @@ const form = ref({
 
 const router = useRouter();
 
-const rules = {
-  username: [{ required: true, message: 'Please enter the username', trigger: 'blur' }],
-  password: [{ required: true, message: 'Please enter the password', trigger: 'blur' }]
-};
+
+
 
 const login = () => {
   // Handle login logic
   //路由跳转
   //router.push('/home');
-  router.push('/screen1')
+  router.push('/home')
 };
 </script>
   
