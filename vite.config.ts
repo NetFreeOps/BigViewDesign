@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     port: 3000, // 更改为您想要的端口号
+    open: true
   },
 })

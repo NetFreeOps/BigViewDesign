@@ -39,7 +39,7 @@ const login = () => {
   // Handle login logic
   //路由跳转
   //router.push('/home');
-  router.push('/home')
+  router.push('/index')
 };
 </script>
   

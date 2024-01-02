@@ -14,6 +14,11 @@ const router = createRouter({
         component: () =>import('../views/Home.vue')
       },
       {
+        path:'/index',
+        name:'index',
+        component:()=>import('../views/index.vue')
+      },
+      {
         path: '/screen1',
         name: 'screen1',
         // route level code-splitting

@@ -4,7 +4,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import {  onMounted } from 'vue'
 import * as echart from 'echarts'
 
 
