@@ -286,6 +286,7 @@
 
 <script lang="ts" setup>
 // import VueDraggableResizable from 'vue-draggable-resizable';
+ import {uuid,getNowDT,swapItems} from '../utils/common'
 // 变量定义开始
 import {
 	ref,
@@ -324,7 +325,7 @@ const ToolTips = ref(false)//拖放位置提示框
 	const messages=ref('') //保存时的信息
 	//界面元素加载
 	const selected_component=ref('') //下拉列表返回的值
-	const component_types=ref('') //选中的组件包含的种类
+	const component_types=ref([{DisplayName:'',detail:'',Thumbnail:''}]) //选中的组件包含的种类
 	const componentList=ref([{ //组件列表
 		value: 'border',
 		label: '边框',
@@ -375,29 +376,29 @@ const ToolTips = ref(false)//拖放位置提示框
 			
 			zoom_size.value.r_wight = FormData.value.r_wight * zooms / 100
 			zoom_size.value.r_height = FormData.value.r_height * zooms / 100
-		},
+		}
 		//图标列表显示
-		const iconListShow = async (e: any, f: string) =>{
+		const iconListShow = async (e: any, f) =>{
 		
 			iconDialog.value = true
 			currentIcon.value = f
-		},
+		}
 		//参数编辑显示
-		const paramsShow = async (e: any, f: string)=> {
+		const paramsShow = async (e: any, f)=> {
 			
 			
 			dialogVisible.value = true
 			currentParams.value = JSON.stringify(e)
 			currentIndex.value = f
-		},
+		}
 		//参数保存
-		const paramsSave =async (e: any, f: any) =>{
+		const paramsSave =async (e, f) =>{
 			// console.log(ActiveComponentData.data.default[currentIndex].default)
 			//ActiveComponentData.data.default[currentIndex].default = JSON.parse(currentParams)
 			// console.log(ActiveComponentData.data.default[currentIndex].default)
 			dialogVisible.value = false
-			ActiveComponentData.value.data.default[currentIndex.value].default = JSON.parse(currentParams.value)
-		},
+			//ActiveComponentData.value.data.default[currentIndex.value].default = JSON.parse(currentParams.value)
+		}
 		//参考线辅助函数
 		const getRefLineParams = async (params: { vLine: any; hLine: any; }) => {
 			const {
@@ -415,27 +416,32 @@ const ToolTips = ref(false)//拖放位置提示框
 				return item
 			})
 
-		},
+		}
+		const AddStep =async () => {
+			
+		}
+
 		//获取项目数据
 		const getdatas =async()=> {
 			
-		},
+		}
 		//加载所有元素列表
 		const  load_component_list = async() => {
 			
-		},
+		}
 		//加载选中的列表的种类
 		const load_component = async () => {
-			component_types.value = selected_component.value.detail
-		},
+			//component_types.value = selected_component.value.detail
+		}
 		//清空设计器
 		const ClearDesign =async() =>{
 			AppendedComponents.value = []
-		},
+		}
 		//将左侧选中组件添加到中间设计器中
-		const AppendComponentToDesign = async(res: { datas: any; SystemName: any; }) => {
+		const AppendComponentToDesign = async(res) => {
 			// console.log(res)
-
+			// 获取uuid
+			let ids = uuid()
 			//let ids = NewUUID()
 			//let _= 			// $notify({
 			// 	message: ids
@@ -474,7 +480,7 @@ const ToolTips = ref(false)//拖放位置提示框
 			})
 			AddStep()
 			console.log(AppendedComponents.value)
-		},
+		}
 		//显示工具栏
 		const onActivated = async(res: { datas: any[]; id: any; }) =>{
 			console.log(res.datas)
@@ -490,7 +496,7 @@ const ToolTips = ref(false)//拖放位置提示框
 					height.value = item.position.height;
 				}
 			})
-		},
+		}
 		//隐藏工具栏
 	const	hidetool = async (res: any) => {
 			//console.log('hide' + res)
@@ -499,9 +505,9 @@ const ToolTips = ref(false)//拖放位置提示框
 			// $message({
 			// 	message:'隐藏工具栏'
 			// })
-		},
+		}
 		//移除设计器添加的组件
-		const remove: any(res: any) {
+		const remove = async (res: any) =>{
 			//console.log(res)
 			// $message({
 			// 	message: res
@@ -517,7 +523,7 @@ const ToolTips = ref(false)//拖放位置提示框
 			//移除组件时，隐藏位置提示组件
 			ToolTips.value = false;
 			AddStep()
-		},
+		}
 		//层级上移
 		const upCommponent =async (index) => {
 			if (index === AppendedComponents.value.length - 1) {
@@ -525,7 +531,7 @@ const ToolTips = ref(false)//拖放位置提示框
 			}
 			//swapItems(AppendedComponents, index, index + 1);
 			AddStep()
-		},
+		}
 		//层级下移
 		const downComponent =async (index)=> {
 			if (index === 0) {
@@ -533,7 +539,7 @@ const ToolTips = ref(false)//拖放位置提示框
 			}
 			//swapItems(AppendedComponents, index, index - 1);
 			AddStep()
-		},
+		}
 		//尺寸正在发生变化时的操作
 		const onResizing = (x: any, y: any, width: any, height: any) =>{
 			// console.log(x + "-" + y + "-" + width + "-" + height)
@@ -541,10 +547,11 @@ const ToolTips = ref(false)//拖放位置提示框
 			y.value = y;
 			width.vlue = width;
 			height.value = height;
-		},
+		}
 		//尺寸改变结束后触发，用来更新大屏组件尺寸
 		const onResize = (x: any, y: any, width: any, height: any) => {
 			//var ids = $data.ActiveComponentData.id.default
+			var ids = uuid()
 			x.value = x;
 			y.value = y;
 			width.value = width;
@@ -586,14 +593,14 @@ const ToolTips = ref(false)//拖放位置提示框
 			}
 
 			AddStep()
-		},
+		}
 		//拖动事件
 		const onDragging =async (x, y) => {
 
 			x.value = x;
 			y.value = y;
 
-		},
+		}
 		//拖动结束事件
 		const onDragStop =async (x, y) => {
 			//var ids = $data.ActiveComponentData.id.default
@@ -607,7 +614,7 @@ const ToolTips = ref(false)//拖放位置提示框
 			})
 			AddStep()
 			// console.log(AppendedComponents)
-		},
+		}
 		//报表预览事件
 		const  PreviewDesign = async () => {
 			await SaveDesignTemp();
@@ -616,11 +623,11 @@ const ToolTips = ref(false)//拖放位置提示框
 			// 	path: '/preview'
 			// });
 			//window.open(routeData.href, '_blank');
-		},
+		}
 		//返回主页面事件
 		const BackHome = async () => {
 			//$router.push('/UserCenter')
-		},
+		}
 		//保存报表到本地
 		const SaveDesignTemp =async () =>{
 			var DesignData = {
@@ -628,13 +635,13 @@ const ToolTips = ref(false)//拖放位置提示框
 				'DesignData': FormData
 			}
 			localStorage.setItem('design', JSON.stringify(DesignData))
-		},
+		}
 		//打开报表保存对话框
 		const OpenDesignSaveModal =async () => {
 			project.value.user = localStorage.getItem('LoginUser')
 			project.value.date = Date().toString()
 			project_modal.value = true
-		},
+		}
 		//保存报表到服务器
 		const SaveDesign =async()=> {
 			var DesignData = {
@@ -665,7 +672,7 @@ const ToolTips = ref(false)//拖放位置提示框
 			// 		message: res
 			// 	})
 			// })
-		},
+		}
 		const onDrag =  (x: any, y: any) =>{
 			x.value = x;
 			y.value = y;

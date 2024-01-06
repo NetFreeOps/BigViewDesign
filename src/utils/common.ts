@@ -1,15 +1,15 @@
-const padLeft = function(str, length,replaceChar) {
-	return ("0000000000000000".replace(/[0]/g,replaceChar||0) + str).substr(-length);
+const padLeft = function(str: string | number, length: number, replaceChar?: string): string {
+	return ("0000000000000000".replace(/[0]/g, replaceChar || '0') + str).substr(-length);
 }
 
-export function randomExtend(minNum, maxNum) {
+export function randomExtend(minNum: number, maxNum: number): number {
 	if (arguments.length === 1) {
-		return parseInt(Math.random() * minNum + 1, 10)
+		return parseInt((Math.random() * minNum + 1).toString(), 10);
 	} else {
-		return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10)
+		return parseInt((Math.random() * (maxNum - minNum + 1) + minNum).toString(), 10);
 	}
 }
-
+// 防抖函数
 export function debounce(delay, callback) {
 	let lastTime
 
@@ -25,7 +25,7 @@ export function debounce(delay, callback) {
 }
 
 export function observerDomResize(dom, callback) {
-	const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+	const MutationObserver = window.MutationObserver || window.MutationObserver || window.MutationObserver
 
 	const observer = new MutationObserver(callback)
 
