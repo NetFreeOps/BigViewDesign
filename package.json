@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^20.10.7",
     "@types/vue-router": "^2.0.0",
     "axios": "^1.6.3",
     "echarts": "^5.4.3",
